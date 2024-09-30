@@ -9,10 +9,32 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.0.0",
+    "@react-native-community/checkbox": "^0.5.17",
+    "@react-navigation/bottom-tabs": "^6.6.1",
+    "@react-navigation/native-stack": "^6.11.0",
+    "axios": "^1.7.7",
+    "date-fns": "^4.1.0",
     "expo": "~51.0.28",
+    "expo-notifications": "^0.28.17",
     "expo-status-bar": "~1.12.1",
+    "lottie-react-native": "^7.0.0",
     "react": "18.2.0",
-    "react-native": "0.74.5"
+    "react-native": "0.74.5",
+    "react-native-calendar-strip": "^2.2.6",
+    "react-native-calendars": "^1.1307.0",
+    "react-native-chart-kit": "^6.12.0",
+    "react-native-collapsible": "^1.6.2",
+    "react-native-elements": "^3.4.3",
+    "react-native-gesture-handler": "^2.19.0",
+    "react-native-modal": "^13.0.1",
+    "react-native-paper": "^5.12.5",
+    "react-native-progress": "^5.0.1",
+    "react-native-push-notification": "^8.1.1",
+    "react-native-reanimated": "^3.15.3",
+    "react-native-svg": "^15.7.1",
+    "react-native-swipe-list-view": "^3.2.9",
+    "victory-native": "^41.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
