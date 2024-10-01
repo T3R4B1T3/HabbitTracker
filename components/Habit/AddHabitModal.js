@@ -272,7 +272,6 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
             />
           </ScrollView>
 
-          {/* Buttons at the bottom */}
           <View style={styles.buttonRow}>
             <Button onPress={handleSaveHabit}>
               {habitToEdit ? "Update Habit" : "Add Habit"}
