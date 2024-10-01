@@ -21,7 +21,11 @@ function AuthContextProvider({ children }) {
   }
 
   function toggleNotifications() {
-    setIsNotificationsEnabled((prev) => !prev);
+    setIsNotificationsEnabled((prev) => {
+      const newState = !prev;
+      console.log("Notifications toggled. New state:", newState);
+      return newState;
+    });
   }
 
   function logout() {

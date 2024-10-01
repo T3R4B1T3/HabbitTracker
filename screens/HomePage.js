@@ -8,14 +8,17 @@ import {
   Alert,
 } from "react-native";
 import { HabitsContext } from "../store/habit-context";
-import CalendarComponent from "../components/Habit/CalendarComponent";
 import FrequencyFilter from "../components/Habit/FrequencyFilter";
 import HabitList from "../components/Habit/HabitList";
 import AddHabitModal from "../components/Habit/AddHabitModal";
 import CelebrationAnimation from "../components/Habit/CelebrationAnimation";
 import { Ionicons } from "@expo/vector-icons";
-import * as Notifications from "expo-notifications";
 import { AuthContext } from "../store/auth-context";
+import LoadingOverlay from "../components/Auth/ui/LoadingOverlay";
+import {
+  scheduleReminderNotification,
+  sendCompletionNotification,
+} from "../components/Habit/Notification";
 
 function HomePage() {
   const habitsCtx = useContext(HabitsContext);
@@ -24,15 +27,17 @@ function HomePage() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedHabit, setSelectedHabit] = useState(null);
   const [checkedHabits, setCheckedHabits] = useState({});
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isAnimationVisible, setAnimationVisible] = useState(false);
   const [completedHabitId, setCompletedHabitId] = useState(null);
   const [filterOption, setFilterOption] = useState("daily");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       await habitsCtx.fetchHabits();
       initializeCheckedHabits();
+      setIsLoading(false);
     };
     fetchData();
   }, [authCtx.email]);
@@ -43,64 +48,6 @@ function HomePage() {
       initialCheckedState[habit.id] = false;
     });
     setCheckedHabits(initialCheckedState);
-  };
-
-  const handleToggleHabit = async (habit) => {
-    await habitsCtx.toggleHabit(habit.id);
-    initializeCheckedHabits();
-
-    setCompletedHabitId(habit.id);
-    setAnimationVisible(true);
-
-    if (authCtx.isNotificationsEnabled) {
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Habit Completed!",
-          body: `Great job! You've completed the habit: ${habit.title}.`,
-          sound: true,
-        },
-        trigger: null,
-      });
-    }
-
-    setTimeout(() => {
-      setAnimationVisible(false);
-    }, 2000);
-  };
-
-  const sendCompletionNotification = (habitName) => {
-    if (authCtx.isNotificationsEnabled) {
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Habit Completed!",
-          body: `Great job! You've completed the habit: ${habitName}.`,
-          sound: true,
-        },
-        trigger: null,
-      });
-    }
-  };
-
-  function handleSaveHabit(newHabit) {
-    const habitWithDate = {
-      ...newHabit,
-      dateAdded: new Date().toISOString(),
-      completed: false,
-      stepsCompleted: 0,
-      totalSteps: newHabit.totalSteps || 4,
-    };
-    if (selectedHabit) {
-      habitsCtx.updateHabit(selectedHabit.id, habitWithDate);
-    } else {
-      habitsCtx.addHabit(habitWithDate);
-    }
-    setModalVisible(false);
-    setSelectedHabit(null);
-    initializeCheckedHabits();
-  }
-
-  const handleDeleteHabit = (habitId) => {
-    habitsCtx.deleteHabit(habitId);
   };
 
   const handleCheckboxToggle = (habitId) => {
@@ -140,15 +87,50 @@ function HomePage() {
         if (finalStepsCompleted === habitToUpdate.totalSteps) {
           setCompletedHabitId(habitId);
           setAnimationVisible(true);
-          sendCompletionNotification(habitToUpdate.name);
+          sendCompletionNotification(habitToUpdate.name); // Use helper function
         }
       } else {
         Alert.alert("Warning", "This habit was checked today. Try tomorrow!", [
-          { text: "OK", onPress: () => console.log("OK pressed") },
+          { text: "OK" },
         ]);
       }
     }
   };
+
+  const handleSaveHabit = (newHabit) => {
+    setIsLoading(true);
+    const habitWithDate = {
+      ...newHabit,
+      dateAdded: new Date().toISOString(),
+      completed: false,
+      stepsCompleted: 0,
+      totalSteps: newHabit.totalSteps || 4,
+    };
+
+    if (selectedHabit) {
+      habitsCtx.updateHabit(selectedHabit.id, habitWithDate);
+    } else {
+      habitsCtx.addHabit(habitWithDate);
+    }
+
+    // Use helper function to schedule notification
+    scheduleReminderNotification(habitWithDate, authCtx.isNotificationsEnabled);
+
+    setModalVisible(false);
+    setSelectedHabit(null);
+    initializeCheckedHabits();
+    setIsLoading(false);
+  };
+
+  const handleDeleteHabit = (habitId) => {
+    setIsLoading(true);
+    habitsCtx.deleteHabit(habitId);
+    setIsLoading(false);
+  };
+
+  if (isLoading) {
+    return <LoadingOverlay message="Loading habits, please wait..." />;
+  }
 
   return (
     <View style={styles.container}>
@@ -169,7 +151,6 @@ function HomePage() {
       <ScrollView contentContainerStyle={styles.habitListContainer}>
         <HabitList
           filterOption={filterOption}
-          selectedDate={selectedDate}
           habits={habitsCtx.habits.filter(
             (habit) => habit.email === authCtx.email
           )}
@@ -184,13 +165,6 @@ function HomePage() {
         />
       </ScrollView>
 
-      {/* <View style={styles.footer}>
-        <CalendarComponent
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
-      </View> */}
-
       <AddHabitModal
         isVisible={isModalVisible}
         habitToEdit={selectedHabit}
@@ -200,6 +174,7 @@ function HomePage() {
           setSelectedHabit(null);
         }}
       />
+
       {isAnimationVisible && (
         <CelebrationAnimation
           onAnimationFinish={() => setAnimationVisible(false)}
@@ -229,12 +204,6 @@ const styles = StyleSheet.create({
   },
   habitListContainer: {
     paddingBottom: 100,
-  },
-  footer: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    backgroundColor: "#fff",
   },
   addButton: {
     backgroundColor: "#6200EE",

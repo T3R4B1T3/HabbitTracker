@@ -34,7 +34,7 @@ function SettingsScreen({ onLogout }) {
   }, []);
 
   const handleNotification = (notification) => {
-    console.log("Received notification:", notification);
+    notification;
   };
 
   const registerForPushNotificationsAsync = async () => {
@@ -102,13 +102,11 @@ function SettingsScreen({ onLogout }) {
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
 
-      {/* User Info */}
       <View style={styles.userInfoContainer}>
         <Text style={styles.label}>Logged in as:</Text>
         <Text style={styles.userEmail}>{userEmail}</Text>
       </View>
 
-      {/* Notifications Switch */}
       <View style={styles.settingRow}>
         <Text style={styles.settingLabel}>Enable Notifications</Text>
         <Switch
@@ -119,7 +117,6 @@ function SettingsScreen({ onLogout }) {
         />
       </View>
 
-      {/* Logout Button */}
       <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
         <Text style={styles.logoutButtonText}>Log out</Text>
       </TouchableOpacity>
