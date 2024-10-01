@@ -416,6 +416,8 @@ const styles = StyleSheet.create({
   centeredModalContainer: {
     justifyContent: "center",
     alignItems: "center",
+    maxHeight: "70%",
+    marginTop: "35%",
   },
   modalContent: {
     backgroundColor: "#fff",

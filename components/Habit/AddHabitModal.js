@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import Modal from "react-native-modal";
 import Button from "../Auth/ui/Button";
@@ -12,7 +13,6 @@ import FlatButton from "../Auth/ui/flatButton";
 import IconSelector from "./IconSelector";
 import { AuthContext } from "../../store/auth-context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import DropDownPicker from "react-native-dropdown-picker";
 import LoadingOverlay from "../Auth/ui/LoadingOverlay";
 
 function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
@@ -28,7 +28,6 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
     reminderTime: new Date(),
   });
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -109,6 +108,20 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
     setTimePickerVisibility(false);
   };
 
+  const selectHowOften = (value) => {
+    setHabitData((prevState) => ({
+      ...prevState,
+      howOften: value,
+    }));
+  };
+
+  const selectReminderFrequency = (value) => {
+    setHabitData((prevState) => ({
+      ...prevState,
+      reminderFrequency: value,
+    }));
+  };
+
   return (
     <>
       {isLoading && <LoadingOverlay message="Saving habit, please wait..." />}
@@ -123,96 +136,143 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
         useNativeDriver={true}
         hideModalContentWhileAnimating={true}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>
-            {habitToEdit ? "Edit Habit" : "Add New Habit"}
-          </Text>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled">
+            <Text style={styles.modalTitle}>
+              {habitToEdit ? "Edit Habit" : "Add New Habit"}
+            </Text>
 
-          <Text style={styles.label}>Habit Name</Text>
-          <TextInput
-            style={styles.input}
-            value={habitData.name}
-            onChangeText={(text) =>
-              setHabitData((prevState) => ({ ...prevState, name: text }))
-            }
-          />
+            <Text style={styles.label}>Habit Name</Text>
+            <TextInput
+              style={styles.input}
+              value={habitData.name}
+              onChangeText={(text) =>
+                setHabitData((prevState) => ({ ...prevState, name: text }))
+              }
+            />
 
-          <Text style={styles.label}>Habit Icon</Text>
-          <IconSelector
-            selectedIcon={habitData.icon}
-            onSelectIcon={(icon) =>
-              setHabitData((prevState) => ({ ...prevState, icon }))
-            }
-          />
+            <Text style={styles.label}>Habit Icon</Text>
+            <IconSelector
+              selectedIcon={habitData.icon}
+              onSelectIcon={(icon) =>
+                setHabitData((prevState) => ({ ...prevState, icon }))
+              }
+            />
 
-          <Text style={styles.label}>Description</Text>
-          <TextInput
-            style={styles.input}
-            value={habitData.description}
-            onChangeText={(text) =>
-              setHabitData((prevState) => ({
-                ...prevState,
-                description: text,
-              }))
-            }
-          />
+            <Text style={styles.label}>Description</Text>
+            <TextInput
+              style={styles.input}
+              value={habitData.description}
+              onChangeText={(text) =>
+                setHabitData((prevState) => ({
+                  ...prevState,
+                  description: text,
+                }))
+              }
+            />
 
-          <Text style={styles.label}>Duration (days)</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            value={habitData.duration}
-            onChangeText={(text) =>
-              setHabitData((prevState) => ({
-                ...prevState,
-                duration: text,
-              }))
-            }
-          />
+            <Text style={styles.label}>Duration (days)</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={habitData.duration}
+              onChangeText={(text) =>
+                setHabitData((prevState) => ({
+                  ...prevState,
+                  duration: text,
+                }))
+              }
+            />
 
-          <Text style={styles.label}>Reminder Frequency</Text>
-          <DropDownPicker
-            open={isDropdownOpen}
-            value={habitData.reminderFrequency}
-            items={[
-              { label: "Daily", value: "daily" },
-              { label: "Weekly", value: "weekly" },
-              { label: "Monthly", value: "monthly" },
-            ]}
-            setOpen={setDropdownOpen}
-            setValue={(callback) =>
-              setHabitData((prevState) => ({
-                ...prevState,
-                reminderFrequency: callback(habitData.reminderFrequency),
-              }))
-            }
-            containerStyle={{ marginBottom: 15 }}
-            style={{ borderColor: "#ccc" }}
-            dropDownContainerStyle={{ backgroundColor: "#fff" }}
-          />
+            <Text style={styles.label}>How Often</Text>
+            <View style={styles.howOftenContainer}>
+              <TouchableOpacity
+                onPress={() => selectHowOften("daily")}
+                style={[
+                  styles.howOftenButton,
+                  habitData.howOften === "daily" && styles.selectedButton,
+                ]}>
+                <Text style={styles.howOftenText}>Daily</Text>
+              </TouchableOpacity>
 
-          <View style={styles.reminderContainer}>
-            <Text style={styles.label}>Reminder Time</Text>
-            <TouchableOpacity
-              onPress={openTimePicker}
-              style={styles.reminderTimeContainer}>
-              <Text style={styles.reminderTime}>
-                {habitData.reminderTime.toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                onPress={() => selectHowOften("weekly")}
+                style={[
+                  styles.howOftenButton,
+                  habitData.howOften === "weekly" && styles.selectedButton,
+                ]}>
+                <Text style={styles.howOftenText}>Weekly</Text>
+              </TouchableOpacity>
 
-          <DateTimePickerModal
-            isVisible={isTimePickerVisible}
-            mode="time"
-            onConfirm={handleConfirmTime}
-            onCancel={closeTimePicker}
-            textColor="black"
-          />
+              <TouchableOpacity
+                onPress={() => selectHowOften("monthly")}
+                style={[
+                  styles.howOftenButton,
+                  habitData.howOften === "monthly" && styles.selectedButton,
+                ]}>
+                <Text style={styles.howOftenText}>Month</Text>
+              </TouchableOpacity>
+            </View>
 
+            <Text style={styles.label}>Reminder Frequency</Text>
+            <View style={styles.howOftenContainer}>
+              <TouchableOpacity
+                onPress={() => selectReminderFrequency("daily")}
+                style={[
+                  styles.howOftenButton,
+                  habitData.reminderFrequency === "daily" &&
+                    styles.selectedButton,
+                ]}>
+                <Text style={styles.howOftenText}>Daily</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => selectReminderFrequency("weekly")}
+                style={[
+                  styles.howOftenButton,
+                  habitData.reminderFrequency === "weekly" &&
+                    styles.selectedButton,
+                ]}>
+                <Text style={styles.howOftenText}>Weekly</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => selectReminderFrequency("monthly")}
+                style={[
+                  styles.howOftenButton,
+                  habitData.reminderFrequency === "monthly" &&
+                    styles.selectedButton,
+                ]}>
+                <Text style={styles.howOftenText}>Month</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.reminderContainer}>
+              <Text style={styles.label}>Reminder Time</Text>
+              <TouchableOpacity
+                onPress={openTimePicker}
+                style={styles.reminderTimeContainer}>
+                <Text style={styles.reminderTime}>
+                  {habitData.reminderTime.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <DateTimePickerModal
+              isVisible={isTimePickerVisible}
+              mode="time"
+              onConfirm={handleConfirmTime}
+              onCancel={closeTimePicker}
+              textColor="black"
+            />
+          </ScrollView>
+
+          {/* Buttons at the bottom */}
           <View style={styles.buttonRow}>
             <Button onPress={handleSaveHabit}>
               {habitToEdit ? "Update Habit" : "Add Habit"}
@@ -237,27 +297,52 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "90%",
     maxWidth: 400,
-    maxHeight: "90%",
+    maxHeight: "80%",
+    justifyContent: "space-between",
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   modalTitle: {
     fontSize: 22,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 15,
   },
   label: {
     fontSize: 16,
+    marginBottom: 5,
     fontWeight: "bold",
-    marginBottom: 10,
-    color: "#333",
   },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
     borderRadius: 5,
+    padding: 10,
     marginBottom: 15,
     fontSize: 16,
+    backgroundColor: "#fff",
+  },
+  howOftenContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+    width: "100%",
+  },
+  howOftenButton: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#ccc",
+    borderRadius: 5,
+    marginHorizontal: 5,
+    alignItems: "center",
+  },
+  selectedButton: {
+    backgroundColor: "#7F51F5",
+  },
+  howOftenText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
   reminderContainer: {
     marginBottom: 15,

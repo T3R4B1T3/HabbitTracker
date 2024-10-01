@@ -87,7 +87,7 @@ function HomePage() {
         if (finalStepsCompleted === habitToUpdate.totalSteps) {
           setCompletedHabitId(habitId);
           setAnimationVisible(true);
-          sendCompletionNotification(habitToUpdate.name); // Use helper function
+          sendCompletionNotification(habitToUpdate.name);
         }
       } else {
         Alert.alert("Warning", "This habit was checked today. Try tomorrow!", [
@@ -113,7 +113,6 @@ function HomePage() {
       habitsCtx.addHabit(habitWithDate);
     }
 
-    // Use helper function to schedule notification
     scheduleReminderNotification(habitWithDate, authCtx.isNotificationsEnabled);
 
     setModalVisible(false);
