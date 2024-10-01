@@ -3,11 +3,10 @@ import axios from "axios";
 const BACKEND_URL =
   "https://habbittracker-8c459-default-rtdb.europe-west1.firebasedatabase.app";
 
-// Zapis nowego nawyku
 export async function storeHabit(habitData) {
   try {
     const response = await axios.post(BACKEND_URL + "/habits.json", habitData);
-    const id = response.data.name; // Pobranie ID z Firebase
+    const id = response.data.name;
     return id;
   } catch (error) {
     console.error("Błąd przy zapisie nawyku w Firebase:", error);
@@ -15,7 +14,6 @@ export async function storeHabit(habitData) {
   }
 }
 
-// Pobranie nawyków z Firebase
 export async function fetchHabits() {
   try {
     const response = await axios.get(BACKEND_URL + "/habits.json");
@@ -37,7 +35,6 @@ export async function fetchHabits() {
   }
 }
 
-// Aktualizacja nawyku w Firebase
 export async function updateHabitInFirebase(id, habitData) {
   try {
     await axios.put(`${BACKEND_URL}/habits/${id}.json`, habitData);
@@ -47,7 +44,6 @@ export async function updateHabitInFirebase(id, habitData) {
   }
 }
 
-// Usunięcie nawyku z Firebase
 export async function deleteHabitFromFirebase(id) {
   try {
     await axios.delete(BACKEND_URL + `/habits/${id}.json`);
