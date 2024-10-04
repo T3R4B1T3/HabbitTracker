@@ -8,11 +8,14 @@ import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomePage from "./screens/HomePage";
 import { Ionicons } from "@expo/vector-icons";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import IconButton from "./components/Auth/ui/IconButton";
 import SettingsScreen from "./screens/Settings";
 import HabitsContextProvider from "./store/habit-context";
 import Progress from "./screens/Progress";
+import WelcomeScreen from "./screens/WelocomeScreen";
+import OnboardingScreen from "./screens/OnBoardingScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -25,6 +28,11 @@ function AuthStack() {
         headerTintColor: "black",
         contentStyle: { backgroundColor: Colors.back },
       }}>
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
@@ -32,6 +40,56 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
+  const authCtx = useContext(AuthContext);
+  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const onboardingCompleted = await AsyncStorage.getItem(
+          "onboardingCompleted"
+        );
+        setIsFirstLaunch(onboardingCompleted === null);
+      } catch (error) {
+        console.error("Failed to check onboarding status:", error);
+      }
+    };
+
+    checkOnboardingStatus();
+  }, []);
+
+  const completeOnboarding = async () => {
+    try {
+      await AsyncStorage.setItem("onboardingCompleted", "true");
+      setIsFirstLaunch(false);
+    } catch (error) {
+      console.error("Failed to set onboarding completion status:", error);
+    }
+  };
+
+  if (isFirstLaunch === null) {
+    return null;
+  }
+
+  return (
+    <Stack.Navigator>
+      {isFirstLaunch && (
+        <Stack.Screen name="Onboarding" options={{ headerShown: false }}>
+          {(props) => (
+            <OnboardingScreen {...props} onComplete={completeOnboarding} />
+          )}
+        </Stack.Screen>
+      )}
+      <Stack.Screen
+        name="Tabs"
+        component={BottomTabsNavigator}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function BottomTabsNavigator() {
   const authCtx = useContext(AuthContext);
 
   return (
