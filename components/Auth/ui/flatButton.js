@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   flatButtonText: {
-    color: "#6200ee",
+    color: "#0dffbe",
     fontSize: 16,
   },
 });

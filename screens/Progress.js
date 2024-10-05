@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import { HabitsContext } from "../store/habit-context";
 import { PieChart } from "react-native-chart-kit";
@@ -71,7 +72,7 @@ const Progress = () => {
       {
         name: "Completed",
         count: completed,
-        color: "#6200ee",
+        color: "#0d6fbf",
       },
       {
         name: "Incomplete",
@@ -107,7 +108,7 @@ const Progress = () => {
         />
         <View style={styles.legendContainer}>
           <View style={styles.legendItem}>
-            <View style={[styles.colorBox, { backgroundColor: "#6200ee" }]} />
+            <View style={[styles.colorBox, { backgroundColor: "#0d6fbf" }]} />
             <Text style={styles.legendText}>Completed</Text>
           </View>
           <View style={styles.legendItem}>
@@ -188,6 +189,7 @@ const Progress = () => {
   };
 
   return (
+    <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Progress</Text>
@@ -262,16 +264,21 @@ const Progress = () => {
         </View>
       </Modal>
     </View>
+    </SafeAreaView>
   );
 };
 export default Progress;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "white", 
+  },
   container: {
     flex: 1,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: "white",
     padding: 16,
-    marginTop: 40,
+    marginTop: 5,
   },
   header: {
     flexDirection: "row",
@@ -279,13 +286,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 10,
-    backgroundColor: "#f5f5f5",
-    elevation: 2,
     marginBottom: 20,
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
+    color:"#0d6fbf",
   },
   pointsTopRightContainer: {
     flexDirection: "row",
@@ -296,13 +302,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 5,
-    color: "black",
+    color:"#0d6fbf"
   },
   scrollableList: {
     flex: 1,
   },
   currentMonthContainer: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#e6f3ff",
     borderRadius: 15,
     padding: 10,
     marginBottom: 20,
@@ -315,7 +321,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   monthTile: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#e6f3ff",
     borderRadius: 10,
     padding: 16,
     marginBottom: 10,
@@ -333,13 +339,17 @@ const styles = StyleSheet.create({
   monthTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#0d6fbf",
   },
   chevronIcon: {
     marginLeft: 10,
+    color:"#0dffbe"
   },
   noHabitsMessage: {
     textAlign: "center",
-    color: "#888",
+    color: "#0dffbe",
+    fontWeight: "bold",
+    marginTop: 10,
   },
   chartContainer: {
     marginVertical: 10,
@@ -349,6 +359,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    color: '#0d6fbf'
   },
   legendContainer: {
     flexDirection: "row",
@@ -367,6 +378,7 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 16,
+    color: "#0d6fbf"
   },
   pointsContainer: {
     flexDirection: "row",
@@ -378,9 +390,10 @@ const styles = StyleSheet.create({
   },
   totalPointsText: {
     fontSize: 16,
+    color: "#0d6fbf"
   },
   habitTile: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#e6f3ff",
     borderRadius: 10,
     padding: 15,
     marginVertical: 5,
@@ -400,6 +413,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginRight: 10,
+    color: "#0d6fbf"
   },
   habitStatusIcon: {
     marginLeft: 15,
@@ -434,13 +448,14 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "#0d6fbf"
   },
   closeButton: {
     padding: 10,
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#6200ee",
+    backgroundColor: "#1cffc2",
     borderRadius: 5,
     paddingVertical: 10,
     alignItems: "center",

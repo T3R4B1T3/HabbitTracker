@@ -8,4 +8,7 @@ export const Colors = {
   gray100: "#ddd",
   gray500: "#888",
   completedHabit: "#d3d3d3",
+  background: "#0f70bf",
+  inactive: "#e6f3ff",
+  active: "#0dffbe"
 };

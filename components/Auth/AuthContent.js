@@ -62,13 +62,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 10,
-    backgroundColor: "#bfbfbf",
+    backgroundColor: "#0d6fbf",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.4,
     shadowColor: "black",
     shadowRadius: 6,
+    
   },
   buttons: {
-    marginTop: 8,
+    marginTop: 2,
   },
 });

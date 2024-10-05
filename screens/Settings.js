@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  SafeAreaView
 } from "react-native";
 import * as Notifications from "expo-notifications";
 import { AuthContext } from "../store/auth-context";
@@ -99,6 +100,7 @@ function SettingsScreen({ onLogout }) {
   }
 
   return (
+    <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
 
@@ -110,7 +112,7 @@ function SettingsScreen({ onLogout }) {
       <View style={styles.settingRow}>
         <Text style={styles.settingLabel}>Enable Notifications</Text>
         <Switch
-          trackColor={{ false: "#767577", true: "#7b2cbf" }}
+          trackColor={{ false: "white", true: "#0f6dbf" }}
           thumbColor={isNotificationsEnabled ? "#4cc9f0" : "#f4f3f4"}
           onValueChange={toggleSwitch}
           value={isNotificationsEnabled}
@@ -121,26 +123,33 @@ function SettingsScreen({ onLogout }) {
         <Text style={styles.logoutButtonText}>Log out</Text>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 }
 
 export default SettingsScreen;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "white", 
+  },
   container: {
+    marginTop: 20,
     flex: 1,
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "white",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    color:"#0d6fbf"
   },
   userInfoContainer: {
     marginBottom: 20,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#e6f3ff",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -148,13 +157,14 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
   },
   label: {
-    fontSize: 16,
-    color: "#888",
+    fontSize: 18,
+    color: "#0d6fbf",
+    fontWeight: "bold"
   },
   userEmail: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#0dffbe",
   },
   settingRow: {
     flexDirection: "row",
@@ -163,13 +173,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
+    backgroundColor: "#e6f3ff",
+    borderRadius: 6,
+    padding: 10
   },
   settingLabel: {
-    fontSize: 16,
+    fontSize: 18,
+    color: "#0d6fbf",
+    marginLeft: 10,
+    fontWeight: "bold"
   },
   logoutButton: {
     marginTop: 20,
-    backgroundColor: "#ff6b6b",
+    backgroundColor: "#0dffbe",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",

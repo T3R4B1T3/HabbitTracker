@@ -6,7 +6,10 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  SafeAreaView
 } from "react-native";
+import { StatusBar } from "react-native";
+
 import { HabitsContext } from "../store/habit-context";
 import FrequencyFilter from "../components/Habit/FrequencyFilter";
 import HabitList from "../components/Habit/HabitList";
@@ -132,7 +135,10 @@ function HomePage() {
   }
 
   return (
+    <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
+      <StatusBar backgroundColor="white"/>
+
       <View style={styles.header}>
         <Text style={styles.title}>Your Habits</Text>
         <TouchableOpacity
@@ -178,17 +184,23 @@ function HomePage() {
         <CelebrationAnimation
           onAnimationFinish={() => setAnimationVisible(false)}
           habitId={completedHabitId}
+          sourceScreen="homepage"
         />
       )}
     </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "white",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
-    marginTop: 60,
+    backgroundColor: "white",
+    marginTop: 20,
   },
   header: {
     paddingHorizontal: 16,
@@ -200,12 +212,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "#0d6fbf"
   },
   habitListContainer: {
     paddingBottom: 100,
   },
   addButton: {
-    backgroundColor: "#6200EE",
+    backgroundColor: "#0dffbe",
     borderRadius: 40,
     padding: 10,
     alignItems: "center",

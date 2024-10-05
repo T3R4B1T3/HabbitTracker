@@ -147,6 +147,7 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
             <TextInput
               style={styles.input}
               value={habitData.name}
+              placeholder="e.g walking"
               onChangeText={(text) =>
                 setHabitData((prevState) => ({ ...prevState, name: text }))
               }
@@ -164,6 +165,7 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
             <TextInput
               style={styles.input}
               value={habitData.description}
+              placeholder="e.g long distances"
               onChangeText={(text) =>
                 setHabitData((prevState) => ({
                   ...prevState,
@@ -175,6 +177,7 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
             <Text style={styles.label}>Duration (days)</Text>
             <TextInput
               style={styles.input}
+              placeholder="e.g 2"
               keyboardType="numeric"
               value={habitData.duration}
               onChangeText={(text) =>
@@ -306,11 +309,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 15,
+    color: "#0d6fbf"
   },
   label: {
     fontSize: 16,
     marginBottom: 5,
     fontWeight: "bold",
+    color: "#8f8f8f"
   },
   input: {
     borderWidth: 1,
@@ -319,28 +324,33 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     fontSize: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "#e6f3ff",
   },
   howOftenContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 15,
-    width: "100%",
+    marginVertical: 10,
+    padding: 6,
+    backgroundColor: "#0d6fbf",
+    borderRadius: 25,
+    elevation: 2,
+    maxWidth: "100%"
   },
   howOftenButton: {
     flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: "#ccc",
+    backgroundColor: "#e6f3ff",
     borderRadius: 5,
     marginHorizontal: 5,
     alignItems: "center",
+    
   },
   selectedButton: {
-    backgroundColor: "#7F51F5",
+    backgroundColor: "#0dffbe",
   },
   howOftenText: {
-    color: "#fff",
+    color: "#0d6fbf",
     fontWeight: "bold",
   },
   reminderContainer: {
@@ -354,13 +364,13 @@ const styles = StyleSheet.create({
   },
   reminderTime: {
     fontSize: 16,
-    color: "#000",
+    color: "#0d6fbf",
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "#ccc",
-    backgroundColor: "#fff",
+    backgroundColor: "#e6f3ff",
     textAlign: "center",
     marginLeft: 10,
     marginBottom: 5,

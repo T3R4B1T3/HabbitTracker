@@ -30,14 +30,15 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
-    color: "#fffacd",
+    color: "#ffffff",
     marginBottom: 8,
     fontSize: 16,
+    fontWeight: "bold"
   },
   input: {
     paddingVertical: 8,
     paddingHorizontal: 6,
-    backgroundColor: "#dcdcdc",
+    backgroundColor: "#e6f3ff",
     borderRadius: 6,
     fontSize: 14,
   },

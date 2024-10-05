@@ -1,21 +1,21 @@
+import React, { useContext, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Colors } from "./constants/colors";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import AuthContextProvider, { AuthContext } from "./store/auth-context";
+import HabitsContextProvider from "./store/habit-context";
+import { Colors } from "./constants/colors";
+import HomePage from "./screens/HomePage";
+import Progress from "./screens/Progress";
+import SettingsScreen from "./screens/Settings";
+import WelcomeScreen from "./screens/WelocomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import { NavigationContainer } from "@react-navigation/native";
-import AuthContextProvider, { AuthContext } from "./store/auth-context";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomePage from "./screens/HomePage";
-import { Ionicons } from "@expo/vector-icons";
-import { useContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import IconButton from "./components/Auth/ui/IconButton";
-import SettingsScreen from "./screens/Settings";
-import HabitsContextProvider from "./store/habit-context";
-import Progress from "./screens/Progress";
-import WelcomeScreen from "./screens/WelocomeScreen";
-import OnboardingScreen from "./screens/OnBoardingScreen";
+import OnboardingScreen from "./screens/OnBoardingScreen"; // Import OnboardingScreen
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -24,65 +24,24 @@ function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.back },
+        headerStyle: { backgroundColor: "white" },
         headerTintColor: "black",
-        contentStyle: { backgroundColor: Colors.back },
+        contentStyle: { backgroundColor: "white" },
+        headerShadowVisible: false,
       }}>
       <Stack.Screen
         name="Welcome"
         component={WelcomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-    </Stack.Navigator>
-  );
-}
-
-function AuthenticatedStack() {
-  const authCtx = useContext(AuthContext);
-  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
-
-  useEffect(() => {
-    const checkOnboardingStatus = async () => {
-      try {
-        const onboardingCompleted = await AsyncStorage.getItem(
-          "onboardingCompleted"
-        );
-        setIsFirstLaunch(onboardingCompleted === null);
-      } catch (error) {
-        console.error("Failed to check onboarding status:", error);
-      }
-    };
-
-    checkOnboardingStatus();
-  }, []);
-
-  const completeOnboarding = async () => {
-    try {
-      await AsyncStorage.setItem("onboardingCompleted", "true");
-      setIsFirstLaunch(false);
-    } catch (error) {
-      console.error("Failed to set onboarding completion status:", error);
-    }
-  };
-
-  if (isFirstLaunch === null) {
-    return null;
-  }
-
-  return (
-    <Stack.Navigator>
-      {isFirstLaunch && (
-        <Stack.Screen name="Onboarding" options={{ headerShown: false }}>
-          {(props) => (
-            <OnboardingScreen {...props} onComplete={completeOnboarding} />
-          )}
-        </Stack.Screen>
-      )}
       <Stack.Screen
-        name="Tabs"
-        component={BottomTabsNavigator}
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -90,12 +49,15 @@ function AuthenticatedStack() {
 }
 
 function BottomTabsNavigator() {
-  const authCtx = useContext(AuthContext);
-
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: Colors.active,
+        tabBarInactiveTintColor: Colors.inactive,
+        tabBarStyle: { backgroundColor: Colors.background },
+      }}>
       <BottomTabs.Screen
-        name="Homepage"
+        name="Home"
         component={HomePage}
         options={{
           tabBarLabel: "Home",
@@ -109,7 +71,6 @@ function BottomTabsNavigator() {
         name="Progress"
         component={Progress}
         options={{
-          title: "Progress",
           tabBarLabel: "Progress",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="stats-chart" size={size} color={color} />
@@ -121,32 +82,58 @@ function BottomTabsNavigator() {
         name="Settings"
         component={SettingsScreen}
         options={{
-          title: "Settings",
           tabBarLabel: "Settings",
-          headerRight: () => (
-            <IconButton
-              icon="exit"
-              color="black"
-              size={24}
-              onPress={authCtx.logout}
-            />
-          ),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
     </BottomTabs.Navigator>
   );
 }
 
-function Navigation() {
+function AppNavigation() {
   const authCtx = useContext(AuthContext);
+  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const onboardingCompleted = await AsyncStorage.getItem("onboardingCompleted");
+        setIsFirstLaunch(onboardingCompleted === null);
+      } catch (error) {
+        console.error("Failed to check onboarding status:", error);
+      }
+    };
+    checkOnboardingStatus();
+  }, []);
+
+  const completeOnboarding = async () => {
+    try {
+      await AsyncStorage.setItem("onboardingCompleted", "true");
+      setIsFirstLaunch(false);
+    } catch (error) {
+      console.error("Failed to set onboarding completion status:", error);
+    }
+  };
+
+  if (isFirstLaunch === null) {
+    return null; // or a loading spinner if you prefer
+  }
 
   return (
     <NavigationContainer>
-      {!authCtx.isAuthenticated && <AuthStack />}
-      {authCtx.isAuthenticated && <AuthenticatedStack />}
+      {!authCtx.isAuthenticated ? (
+        <AuthStack />
+      ) : (
+        <>
+          <BottomTabsNavigator />
+          {isFirstLaunch && (
+            <OnboardingScreen onComplete={completeOnboarding} /> // Show onboarding on the HomePage
+          )}
+        </>
+      )}
     </NavigationContainer>
   );
 }
@@ -157,7 +144,7 @@ export default function App() {
       <StatusBar style="auto" />
       <AuthContextProvider>
         <HabitsContextProvider>
-          <Navigation />
+          <AppNavigation />
         </HabitsContextProvider>
       </AuthContextProvider>
     </>

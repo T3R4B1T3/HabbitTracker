@@ -3,16 +3,21 @@ import { View, Text, Modal } from "react-native";
 import LottieView from "lottie-react-native";
 import styles from "../../constants/styles";
 
-const CelebrationAnimation = ({
-  isVisible,
-  onAnimationFinish,
-  completedHabits,
-  habitId,
-}) => {
+const CelebrationAnimation = ({ isVisible, onAnimationFinish, habitId, sourceScreen }) => {
   useEffect(() => {
     if (isVisible) {
+      // Możesz tutaj dodać dodatkową logikę jeśli potrzebujesz.
     }
   }, [isVisible]);
+
+  const getMessage = () => {
+    if (sourceScreen === "onboarding") {
+      return "Onboarding completed!";
+    } else if (sourceScreen === "homepage") {
+      return "Good Job! You have completed your habit!";
+    }
+    return "Well done!";
+  };
 
   return (
     <Modal visible={isVisible} transparent animationType="fade">
@@ -27,7 +32,7 @@ const CelebrationAnimation = ({
           }}
         />
         <Text style={styles.congratsText}>
-          Good Job! You have completed your habbit!
+          {getMessage()}
         </Text>
       </View>
     </Modal>

@@ -19,7 +19,7 @@ const HabitItem = ({
       onPress={() => handleHabitPress(habit)}
       activeOpacity={habit.completed ? 1 : 0.7}>
       <View style={styles.habitRow}>
-        <Ionicons name={habit.icon} size={24} color="black" />
+        <Ionicons name={habit.icon} size={24} color="#0d6fbf" />
         <Text style={styles.habitText}>{habit.name || "Unnamed Habit"}</Text>
       </View>
       <Text style={styles.stepsText}>
@@ -33,8 +33,8 @@ const HabitItem = ({
             }
             width={null}
             height={10}
-            color="#6200ee"
-            unfilledColor="#ddd"
+            color="#0dffbe"
+            unfilledColor="#0d6fbf"
             borderWidth={0}
             borderRadius={5}
           />
@@ -43,7 +43,7 @@ const HabitItem = ({
           <Ionicons
             name={checkedHabits[habit.id] ? "checkbox" : "square-outline"}
             size={24}
-            color={checkedHabits[habit.id] ? "#6200ee" : "#999"}
+            color={checkedHabits[habit.id] ? "#0dffbe" : "#999"}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -58,7 +58,7 @@ const HabitItem = ({
 
 const styles = StyleSheet.create({
   habitContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "#e6f3ff",
     borderRadius: 8,
     padding: 16,
     margin: 8,
@@ -72,11 +72,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     flex: 1,
+    color: "#0d6fbf"
   },
   stepsText: {
     fontSize: 12,
     color: "#888",
     marginBottom: 8,
+    color: "#0d6fbf"
   },
   progressRow: {
     flexDirection: "row",

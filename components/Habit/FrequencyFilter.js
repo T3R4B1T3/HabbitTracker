@@ -53,10 +53,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 10,
+    marginHorizontal: 10,
     padding: 5,
-    backgroundColor: "#F0F0F0",
+    backgroundColor: "#0d6fbf",
     borderRadius: 25,
     elevation: 2,
+    maxWidth: "100%"
   },
   filterButton: {
     flex: 1,
@@ -64,11 +66,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginHorizontal: 5,
     borderRadius: 20,
-    backgroundColor: "#EAEAEA",
+    backgroundColor: "#e6f3ff",
     elevation: 1,
   },
   activeFilter: {
-    backgroundColor: "#6200ee",
+    backgroundColor: "#0dffbe",
     elevation: 4,
   },
   filterText: {
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   inactiveText: {
-    color: "black",
+    color: "#1171bf",
   },
 });
 
