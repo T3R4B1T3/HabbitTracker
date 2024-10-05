@@ -6,7 +6,6 @@ import styles from "../../constants/styles";
 const CelebrationAnimation = ({ isVisible, onAnimationFinish, habitId, sourceScreen }) => {
   useEffect(() => {
     if (isVisible) {
-      // Możesz tutaj dodać dodatkową logikę jeśli potrzebujesz.
     }
   }, [isVisible]);
 

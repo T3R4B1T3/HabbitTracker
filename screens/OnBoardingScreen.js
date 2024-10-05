@@ -52,7 +52,7 @@ function OnboardingScreen({ visible, onComplete }) {
     await AsyncStorage.setItem("onboardingCompleted", "true");
     setOnboardingComplete(true);
     if (onComplete) {
-      onComplete(); // Notify HomePage that onboarding is complete
+      onComplete();
     }
   };
 

@@ -15,8 +15,7 @@ import SettingsScreen from "./screens/Settings";
 import WelcomeScreen from "./screens/WelocomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import OnboardingScreen from "./screens/OnBoardingScreen"; // Import OnboardingScreen
-
+import OnboardingScreen from "./screens/OnBoardingScreen"; 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
@@ -119,7 +118,7 @@ function AppNavigation() {
   };
 
   if (isFirstLaunch === null) {
-    return null; // or a loading spinner if you prefer
+    return null; 
   }
 
   return (
@@ -130,7 +129,7 @@ function AppNavigation() {
         <>
           <BottomTabsNavigator />
           {isFirstLaunch && (
-            <OnboardingScreen onComplete={completeOnboarding} /> // Show onboarding on the HomePage
+            <OnboardingScreen onComplete={completeOnboarding} />
           )}
         </>
       )}
