@@ -19,12 +19,12 @@ const HabitItem = ({
       onPress={() => handleHabitPress(habit)}
       activeOpacity={habit.completed ? 1 : 0.7}>
       <View style={styles.habitRow}>
-        <Ionicons name={habit.icon} size={24} color="#0d6fbf" />
+        <Ionicons name={habit.icon} size={24} color="#dd6e42" />
         <Text style={styles.habitText}>{habit.name || "Unnamed Habit"}</Text>
-      </View>
-      <Text style={styles.stepsText}>
+        <Text style={styles.stepsText}>
         {habit.stepsCompleted}/{habit.totalSteps || 0}
       </Text>
+      </View>
       <View style={styles.progressRow}>
         <View style={styles.progressContainer}>
           <Progress.Bar
@@ -33,8 +33,8 @@ const HabitItem = ({
             }
             width={null}
             height={10}
-            color="#0dffbe"
-            unfilledColor="#0d6fbf"
+            color="#dd6e42"
+            unfilledColor="#eaeaea"
             borderWidth={0}
             borderRadius={5}
           />
@@ -43,7 +43,7 @@ const HabitItem = ({
           <Ionicons
             name={checkedHabits[habit.id] ? "checkbox" : "square-outline"}
             size={24}
-            color={checkedHabits[habit.id] ? "#0dffbe" : "#999"}
+            color={checkedHabits[habit.id] ? "#ffb703" : "white"}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -58,7 +58,7 @@ const HabitItem = ({
 
 const styles = StyleSheet.create({
   habitContainer: {
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "#4f6d7a",
     borderRadius: 8,
     padding: 16,
     margin: 8,
@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     flex: 1,
-    color: "#0d6fbf"
+    color: "white"
   },
   stepsText: {
-    fontSize: 12,
-    color: "#888",
+    fontSize: 16,
     marginBottom: 8,
-    color: "#0d6fbf"
+    color: "white",
+    marginRight: 7,
   },
   progressRow: {
     flexDirection: "row",
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   deleteButton: {
-    backgroundColor: "#ff6347",
+    backgroundColor: "#dd6e42",
     padding: 8,
     borderRadius: 5,
     marginLeft: 10,

@@ -11,11 +11,7 @@ function OnboardingScreen({ visible, onComplete }) {
   const steps = [
     {
       key: "addButton",
-      description: "Hey there! Let's start by adding a new habit. Tap te icon i right corner!",
-    },
-    {
-      key: "frequencyButton",
-      description: "Great! Now, you create your habit.",
+      description: "Hey there! Let's start by adding a new habit. Tap the icon i right corner!",
     },
     {
       key: "habitTile",
@@ -104,7 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   nextButton: {
-    backgroundColor: "#0dffbe",
+    backgroundColor: "#fb8500",
     padding: 15,
     borderRadius: 10,
   },

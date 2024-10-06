@@ -195,11 +195,11 @@ function HomePage() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#eaeaea",
     marginTop: 20,
   },
   header: {
@@ -212,13 +212,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#0d6fbf"
+    color: "#4f6d7a"
   },
   habitListContainer: {
     paddingBottom: 100,
   },
   addButton: {
-    backgroundColor: "#0dffbe",
+    backgroundColor: "#dd6e42",
     borderRadius: 40,
     padding: 10,
     alignItems: "center",

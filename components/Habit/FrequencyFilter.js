@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 5,
-    backgroundColor: "#0d6fbf",
     borderRadius: 25,
     elevation: 2,
     maxWidth: "100%"
@@ -66,11 +65,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginHorizontal: 5,
     borderRadius: 20,
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "#4f6d7a",
     elevation: 1,
   },
   activeFilter: {
-    backgroundColor: "#0dffbe",
+    backgroundColor: "#dd6e42",
     elevation: 4,
   },
   filterText: {
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   inactiveText: {
-    color: "#1171bf",
+    color: "white",
   },
 });
 

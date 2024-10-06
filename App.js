@@ -23,9 +23,9 @@ function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: "white" },
+        headerStyle: { backgroundColor: "#eaeaea" },
         headerTintColor: "black",
-        contentStyle: { backgroundColor: "white" },
+        contentStyle: { backgroundColor: "#eaeaea" },
         headerShadowVisible: false,
       }}>
       <Stack.Screen
@@ -53,7 +53,9 @@ function BottomTabsNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors.active,
         tabBarInactiveTintColor: Colors.inactive,
-        tabBarStyle: { backgroundColor: Colors.background },
+        tabBarStyle: { backgroundColor: Colors.background, height: 90  },
+        tabBarItemStyle: {padding: 4, marginTop: 8,},
+        tabBarIconStyle:{size: 20,}
       }}>
       <BottomTabs.Screen
         name="Home"

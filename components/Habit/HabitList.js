@@ -20,7 +20,7 @@ const HabitList = ({
   return (
     <>
       {filteredHabits.length === 0 ? (
-        <Text style={styles.noHabitsText}>No habits added for this day</Text>
+        <Text style={styles.noHabitsText}>No habits added yet</Text>
       ) : (
         filteredHabits.map((habit) => (
           <HabitItem

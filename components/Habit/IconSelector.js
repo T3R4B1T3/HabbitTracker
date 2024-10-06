@@ -24,7 +24,7 @@ function IconSelector({ selectedIcon, onSelectIcon }) {
           <Ionicons
             name={icon.name}
             size={30}
-            color={selectedIcon === icon.name ? "white" : "#0d6fbf"}
+            color={selectedIcon === icon.name ? "white" : "white"}
           />
           <Text
             style={[
@@ -49,18 +49,19 @@ const styles = StyleSheet.create({
   iconButton: {
     padding: 10,
     borderRadius: 10,
-    borderColor: "#0d6fbf",
+    borderColor: "#4f6d7a",
+    backgroundColor: "#4f6d7a",
     borderWidth: 1,
     alignItems: "center",
   },
   selectedIcon: {
-    backgroundColor: "#0dffbe",
-    borderColor: "#0d6fbf",
+    backgroundColor: "#dd6e42",
+    borderColor: "#dd6e42",
   },
   label: {
     marginTop: 5,
     fontSize: 12,
-    color: "#0d6fbf",
+    color: "white",
   },
 });
 

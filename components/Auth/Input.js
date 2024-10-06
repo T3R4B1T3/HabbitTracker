@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
-    color: "#ffffff",
+    color: "#eaeaea",
     marginBottom: 8,
     fontSize: 16,
     fontWeight: "bold"
@@ -38,8 +38,10 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 8,
     paddingHorizontal: 6,
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "white",
     borderRadius: 6,
+    borderColor:"#4f6d7a",
+    borderWidth: 1,
     fontSize: 14,
   },
 });

@@ -72,12 +72,12 @@ const Progress = () => {
       {
         name: "Completed",
         count: completed,
-        color: "#0d6fbf",
+        color: "#dd6e42",
       },
       {
         name: "Incomplete",
         count: incomplete,
-        color: "#d3d3d3",
+        color: "#eaeaea",
       },
     ];
 
@@ -108,11 +108,11 @@ const Progress = () => {
         />
         <View style={styles.legendContainer}>
           <View style={styles.legendItem}>
-            <View style={[styles.colorBox, { backgroundColor: "#0d6fbf" }]} />
+            <View style={[styles.colorBox, { backgroundColor: "#dd6e42" }]} />
             <Text style={styles.legendText}>Completed</Text>
           </View>
           <View style={styles.legendItem}>
-            <View style={[styles.colorBox, { backgroundColor: "#d3d3d3" }]} />
+            <View style={[styles.colorBox, { backgroundColor: "#eaeaea" }]} />
             <Text style={styles.legendText}>Incomplete</Text>
           </View>
         </View>
@@ -162,23 +162,28 @@ const Progress = () => {
           return (
             <View key={index} style={styles.habitTile}>
               <View style={styles.habitRow}>
-                <Text style={styles.habitName}>{habit.name}</Text>
-
-                <Ionicons
-                  name={habit.completed ? "checkmark-circle" : "close-circle"}
-                  size={26}
-                  color={habit.completed ? "#4caf50" : "#f44336"}
-                  style={styles.habitStatusIcon}
-                />
-
+                <View style={styles.habitNameContainer}>
+                  <Text style={styles.habitName} numberOfLines={1} ellipsizeMode="tail">
+                    {habit.name}
+                  </Text>
+                </View>
+                <View style={styles.habitIconContainer}>
+                  <Ionicons
+                    name={habit.completed ? "checkmark-circle" : "close-circle"}
+                    size={26}
+                    color={habit.completed ? "#2AAA8A" : "#D2042D"}
+                  />
+                </View>
                 <View style={styles.habitPointsContainer}>
+                  <Text style={styles.habitPoints}>
+                    {points}
+                  </Text>
                   <Ionicons
                     name="star"
                     size={24}
                     color="#FFD700"
                     style={styles.pointsIcon}
                   />
-                  <Text style={styles.habitPoints}>{points} pts</Text>
                 </View>
               </View>
             </View>
@@ -188,82 +193,84 @@ const Progress = () => {
     );
   };
 
+
+
   return (
     <SafeAreaView style={styles.safeArea}>
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Progress</Text>
-        <View style={styles.pointsTopRightContainer}>
-          <Ionicons name="star" size={24} color="#FFD700" />
-          <Text style={styles.totalPointsTopRightText}>
-            Total Points: {currentMonthPoints}
-          </Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Progress</Text>
+          <View style={styles.pointsTopRightContainer}>
+            <Ionicons name="star" size={24} color="#ffb703" />
+            <Text style={styles.totalPointsTopRightText}>
+              Total Points: {currentMonthPoints}
+            </Text>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.currentMonthContainer}>
-        {monthlyHabits[currentMonth] && renderChart(currentMonth)}
-      </View>
+        <View style={styles.currentMonthContainer}>
+          {monthlyHabits[currentMonth] && renderChart(currentMonth)}
+        </View>
 
-      <ScrollView style={styles.scrollableList}>
-        {Array.from({ length: 12 }, (_, i) => {
-          const monthName = new Date(1970, i, 15).toLocaleString("default", {
-            month: "long",
-          });
+        <ScrollView style={styles.scrollableList}>
+          {Array.from({ length: 12 }, (_, i) => {
+            const monthName = new Date(1970, i, 15).toLocaleString("default", {
+              month: "long",
+            });
 
-          if (monthName === currentMonth) return null;
+            if (monthName === currentMonth) return null;
 
-          const isMonthDisplayed = activeSections.includes(monthName);
+            const isMonthDisplayed = activeSections.includes(monthName);
 
-          return (
-            <TouchableOpacity
-              key={`${monthName}-${i}`}
-              onPress={() => toggleSection(monthName)}
-              style={styles.monthTile}>
-              <View style={styles.touchableMonth}>
-                <Text style={styles.monthTitle}>{monthName}</Text>
-                <Ionicons
-                  name={isMonthDisplayed ? "chevron-up" : "chevron-down"}
-                  size={24}
-                  color="#6200ee"
-                  style={styles.chevronIcon}
-                />
+            return (
+              <TouchableOpacity
+                key={`${monthName}-${i}`}
+                onPress={() => toggleSection(monthName)}
+                style={styles.monthTile}>
+                <View style={styles.touchableMonth}>
+                  <Text style={styles.monthTitle}>{monthName}</Text>
+                  <Ionicons
+                    name={isMonthDisplayed ? "chevron-up" : "chevron-down"}
+                    size={24}
+                    color="#6200ee"
+                    style={styles.chevronIcon}
+                  />
+                </View>
+                <Collapsible collapsed={!isMonthDisplayed}>
+                  {monthlyHabits[monthName] ? (
+                    renderChart(monthName)
+                  ) : (
+                    <Text style={styles.noHabitsMessage}>
+                      No habits added yet.
+                    </Text>
+                  )}
+                </Collapsible>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+
+        <Modal
+          isVisible={isModalVisible}
+          onBackdropPress={closeModal}
+          style={styles.centeredModalContainer}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <View>
+                <Text style={styles.modalTitle}>Habit Details</Text>
+                <Text style={styles.modalTitle}>{selectedMonth}</Text>
               </View>
-              <Collapsible collapsed={!isMonthDisplayed}>
-                {monthlyHabits[monthName] ? (
-                  renderChart(monthName)
-                ) : (
-                  <Text style={styles.noHabitsMessage}>
-                    No habits added yet.
-                  </Text>
-                )}
-              </Collapsible>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-
-      <Modal
-        isVisible={isModalVisible}
-        onBackdropPress={closeModal}
-        style={styles.centeredModalContainer}>
-        <View style={styles.modalContent}>
-          <View style={styles.modalHeader}>
-            <View>
-              <Text style={styles.modalTitle}>Habit Details</Text>
-              <Text style={styles.modalTitle}>{selectedMonth}</Text>
+              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                <Ionicons name="close" size={30} color="#333" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Ionicons name="close" size={30} color="#333" />
+            {renderHabitDetails()}
+            <TouchableOpacity onPress={closeModal} style={styles.button}>
+              <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
-          {renderHabitDetails()}
-          <TouchableOpacity onPress={closeModal} style={styles.button}>
-            <Text style={styles.buttonText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 };
@@ -272,11 +279,11 @@ export default Progress;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white", 
+    backgroundColor: "#eaeaea",
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#eaeaea",
     padding: 16,
     marginTop: 5,
   },
@@ -291,7 +298,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color:"#0d6fbf",
+    color: "#4f6d7a",
   },
   pointsTopRightContainer: {
     flexDirection: "row",
@@ -302,13 +309,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 5,
-    color:"#0d6fbf"
+    color: "#4f6d7a"
   },
   scrollableList: {
     flex: 1,
   },
   currentMonthContainer: {
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "#4f6d7a",
     borderRadius: 15,
     padding: 10,
     marginBottom: 20,
@@ -321,7 +328,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   monthTile: {
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "#4f6d7a",
     borderRadius: 10,
     padding: 16,
     marginBottom: 10,
@@ -339,15 +346,15 @@ const styles = StyleSheet.create({
   monthTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#0d6fbf",
+    color: "#eaeaea",
   },
   chevronIcon: {
     marginLeft: 10,
-    color:"#0dffbe"
+    color: "#eaeaea"
   },
   noHabitsMessage: {
     textAlign: "center",
-    color: "#0dffbe",
+    color: "#eaeaea",
     fontWeight: "bold",
     marginTop: 10,
   },
@@ -359,7 +366,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    color: '#0d6fbf'
+    color: '#eaeaea'
   },
   legendContainer: {
     flexDirection: "row",
@@ -378,7 +385,7 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 16,
-    color: "#0d6fbf"
+    color: "white"
   },
   pointsContainer: {
     flexDirection: "row",
@@ -387,44 +394,49 @@ const styles = StyleSheet.create({
   },
   pointsIcon: {
     marginRight: 5,
+    color: "#ffb703"
   },
   totalPointsText: {
     fontSize: 16,
-    color: "#0d6fbf"
-  },
-  habitTile: {
-    backgroundColor: "#e6f3ff",
-    borderRadius: 10,
-    padding: 15,
-    marginVertical: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    color: "#eaeaea"
   },
   habitRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    height: 60,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    backgroundColor: '#4f6d7a',
+    borderRadius: 8,
+  },
+  habitNameContainer: {
+    flex: 2,
+    justifyContent: 'center',
   },
   habitName: {
-    flex: 1,
     fontSize: 16,
     fontWeight: "bold",
-    marginRight: 10,
-    color: "#0d6fbf"
+    color: "#eaeaea",
+    paddingLeft: 5,
   },
-  habitStatusIcon: {
-    marginLeft: 15,
-    marginRight: 10,
+  habitIconContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   habitPointsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flex: 1,
+    flexDirection: "row", 
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   habitPoints: {
     fontSize: 16,
+    color: "#eaeaea",
+    marginRight: 5, 
+  },
+  pointsIcon: {
     marginLeft: 5,
   },
   centeredModalContainer: {
@@ -434,7 +446,7 @@ const styles = StyleSheet.create({
     marginTop: "35%",
   },
   modalContent: {
-    backgroundColor: "#fff",
+    backgroundColor: "#eaeaea",
     borderRadius: 10,
     padding: 20,
     width: Dimensions.get("window").width - 40,
@@ -448,14 +460,14 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#0d6fbf"
+    color: "#4f6d7a"
   },
   closeButton: {
     padding: 10,
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#1cffc2",
+    backgroundColor: "#dd6e42",
     borderRadius: 5,
     paddingVertical: 10,
     alignItems: "center",

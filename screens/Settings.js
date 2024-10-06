@@ -112,8 +112,8 @@ function SettingsScreen({ onLogout }) {
       <View style={styles.settingRow}>
         <Text style={styles.settingLabel}>Enable Notifications</Text>
         <Switch
-          trackColor={{ false: "white", true: "#0f6dbf" }}
-          thumbColor={isNotificationsEnabled ? "#4cc9f0" : "#f4f3f4"}
+          trackColor={{ false: "#c0d6df", true: "#e8dab2" }}
+          thumbColor={isNotificationsEnabled ? "#dd6e42" : "white"}
           onValueChange={toggleSwitch}
           value={isNotificationsEnabled}
         />
@@ -132,24 +132,24 @@ export default SettingsScreen;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white", 
+    backgroundColor: "#eaeaea", 
   },
   container: {
     marginTop: 20,
     flex: 1,
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: "#eaeaea",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color:"#0d6fbf"
+    color:"#4f6d7a"
   },
   userInfoContainer: {
     marginBottom: 20,
     padding: 10,
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "#4f6d7a",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -158,13 +158,13 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 18,
-    color: "#0d6fbf",
+    color: "white",
     fontWeight: "bold"
   },
   userEmail: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#0dffbe",
+    color: "#e8dab2",
   },
   settingRow: {
     flexDirection: "row",
@@ -173,19 +173,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
-    backgroundColor: "#e6f3ff",
+    backgroundColor: "#4f6d7a",
     borderRadius: 6,
     padding: 10
   },
   settingLabel: {
     fontSize: 18,
-    color: "#0d6fbf",
+    color: "white",
     marginLeft: 10,
     fontWeight: "bold"
   },
   logoutButton: {
     marginTop: 20,
-    backgroundColor: "#0dffbe",
+    backgroundColor: "#fb8500",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",

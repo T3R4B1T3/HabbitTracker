@@ -279,7 +279,7 @@ function AddHabitModal({ isVisible, onClose, habitToEdit, onSave }) {
             <Button onPress={handleSaveHabit}>
               {habitToEdit ? "Update Habit" : "Add Habit"}
             </Button>
-            <FlatButton onPress={onClose}>Cancel</FlatButton>
+            <FlatButton onPress={onClose} style>Cancel</FlatButton>
           </View>
         </View>
       </Modal>
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "#eaeaea",
     borderRadius: 10,
     padding: 20,
     width: "90%",
@@ -309,29 +309,30 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 15,
-    color: "#0d6fbf"
+    color: "#4f6d7a"
   },
   label: {
     fontSize: 16,
     marginBottom: 5,
     fontWeight: "bold",
-    color: "#8f8f8f"
+    color: "#4f6d7a"
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#4f6d7a",
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
     fontSize: 16,
-    backgroundColor: "#e6f3ff",
+    color: "#023047",
+    backgroundColor: "white",
+    maxWidth: "97%"
   },
   howOftenContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 10,
     padding: 6,
-    backgroundColor: "#0d6fbf",
     borderRadius: 25,
     elevation: 2,
     maxWidth: "100%"
@@ -340,17 +341,17 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: "#e6f3ff",
-    borderRadius: 5,
+    backgroundColor: "#4f6d7a",
+    borderRadius: 10,
     marginHorizontal: 5,
     alignItems: "center",
     
   },
   selectedButton: {
-    backgroundColor: "#0dffbe",
+    backgroundColor: "#dd6e42",
   },
   howOftenText: {
-    color: "#0d6fbf",
+    color: "white",
     fontWeight: "bold",
   },
   reminderContainer: {
@@ -364,13 +365,13 @@ const styles = StyleSheet.create({
   },
   reminderTime: {
     fontSize: 16,
-    color: "#0d6fbf",
+    color: "white",
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#e6f3ff",
+    borderColor: "#4f6d7a",
+    backgroundColor: "#4f6d7a",
     textAlign: "center",
     marginLeft: 10,
     marginBottom: 5,

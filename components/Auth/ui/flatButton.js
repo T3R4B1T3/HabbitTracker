@@ -16,9 +16,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginVertical: 10,
     alignItems: "center",
+    borderColor: "#dd6e42",
+    borderWidth: 2,
   },
   flatButtonText: {
-    color: "#0dffbe",
+    color: "#dd6e42",
     fontSize: 16,
   },
 });

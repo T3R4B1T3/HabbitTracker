@@ -11,7 +11,7 @@ function Button({ onPress, children }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#0dffbe",
+    backgroundColor: "#dd6e42",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 25,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#ffffff",
+    color: "#eaeaea",
     fontSize: 16,
     fontWeight: "bold"
   },

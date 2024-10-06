@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 10,
+    color: 'white',
   },
   completedHabitText: {
     textDecorationLine: "line-through",
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   noHabitsText: {
     fontSize: 16,
-    color: Colors.gray500,
+    color: "#4f6d7a",
     textAlign: "center",
     marginTop: 20,
   },
