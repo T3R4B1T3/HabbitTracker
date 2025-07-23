@@ -34,7 +34,7 @@ A mobile application for tracking daily habits, built with React Native using Ex
 2. Install dependencies
 
   npm install
-# or
+  or
   yarn install
 
 
