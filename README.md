@@ -37,7 +37,7 @@ A mobile application for tracking daily habits, built with React Native using Ex
 
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/your-username/habit-tracker.git
+   git clone https://github.com/T3R4B1T3/habit-tracker.git
    cd habit-tracker
    ```
 
