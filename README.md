@@ -33,12 +33,12 @@ A mobile application for tracking daily habits, built with React Native using Ex
    cd habit-tracker
 2. Install dependencies
 
-  npm install
-  or
-  yarn install
+     npm install
+     or
+     yarn install
 
 
 3. Start the app
 
-  npm expo start
+     npm expo start
 
