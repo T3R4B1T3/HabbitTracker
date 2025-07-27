@@ -1,6 +1,6 @@
 # 📱 Habit Tracker
 
-🎥 **App preview demo:** [Check out on Google Drive](https://drive.google.com/drive/folders/1MCSZuOpNceUjHdWW5gc41F96_PKhDGBu?usp=sharing))
+🎥 **App preview demo:** [Check out on Google Drive](https://drive.google.com/drive/folders/1MCSZuOpNceUjHdWW5gc41F96_PKhDGBu?usp=sharing)
 
 A mobile application for tracking daily habits, built with React Native using Expo and Firebase. Helps users build positive routines and stay consistent.
 
